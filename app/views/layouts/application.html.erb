@@ -9,6 +9,27 @@
   </head>
 
   <body>
-    <%= yield %>
+    <body>
+	<header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <%= link_to "AnswerMe", root_path, id: "logo" %>
+          <nav>
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to "Home", root_path %></li>
+              <li><%= link_to "Sign in", '#' %></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+    <% end %>
+
+<div class="container">
+  <%= yield %>
+</div>
   </body>
 </html>

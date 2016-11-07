@@ -17,7 +17,28 @@
           <nav>
             <ul class="nav navbar-nav navbar-right">
               <li><%= link_to "Home", root_path %></li>
-              <li><%= link_to "Sign in", '#' %></li>
+              
+              <% if user_signed_in? %>
+                <li id="fat-menu" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= current_user.name %> <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "Profile", edit_user_registration_path %></li>
+                    
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to "Create Survey", '#' %>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to "Sign out", destroy_user_session_path, method: "delete" %>
+                    </li>
+                  </ul>
+                </li>
+              <% else %>
+                <li><%= link_to "Sign in", new_user_session_path %></li>
+              <% end %>
             </ul>
           </nav>
         </div>
@@ -25,7 +46,10 @@
     </header>
 
     <% flash.each do |key, value| %>
-      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <div class="alert alert-<%= key %>">
+        <a href="#" data-dismiss="alert" class="close">×</a>
+        <%= value %>
+      </div>
     <% end %>
 
 <div class="container">

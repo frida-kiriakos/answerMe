@@ -4,7 +4,7 @@
   <h4 class="center"> Create your survey here. <br/><br/> Ask and there will be answers :) </h4>
 
   <% if user_signed_in? %>
-    <%= link_to "Create Survey", '#', class: "btn btn-large btn-primary" %>
+    <%= link_to "Create Survey", new_survey_path, class: "btn btn-large btn-primary" %>
   <% else %>
     <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
   <% end %>

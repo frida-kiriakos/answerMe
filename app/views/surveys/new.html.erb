@@ -1,2 +1,13 @@
-<h1>Surveys#new</h1>
-<p>Find me in app/views/surveys/new.html.erb</p>
+<h3 class="center"> Create a Survey </h3>
+<div class=" col-md-4 col-md-offset-4 col-xs-3">
+  <%= form_for(@survey) do |f| %>
+    <div class="form-group">
+      <%= f.label :title %><br />
+      <%= f.text_field :title, autofocus: true, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group center">
+      <%= f.submit "Create", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

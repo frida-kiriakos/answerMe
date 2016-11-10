@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108140753) do
+ActiveRecord::Schema.define(version: 20161110150115) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -20,13 +20,33 @@ ActiveRecord::Schema.define(version: 20161108140753) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "filled_surveys", force: :cascade do |t|
+    t.integer  "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_filled_surveys_on_survey_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer  "survey_id"
     t.text     "content"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "answer_type"
+    t.integer  "answers_number"
     t.index ["survey_id"], name: "index_questions_on_survey_id"
+  end
+
+  create_table "survey_answers", force: :cascade do |t|
+    t.integer  "filled_survey_id"
+    t.integer  "question_id"
+    t.integer  "answer_id"
+    t.text     "content"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["answer_id"], name: "index_survey_answers_on_answer_id"
+    t.index ["filled_survey_id"], name: "index_survey_answers_on_filled_survey_id"
+    t.index ["question_id"], name: "index_survey_answers_on_question_id"
   end
 
   create_table "surveys", force: :cascade do |t|

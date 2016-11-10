@@ -7,7 +7,6 @@ class SurveysController < ApplicationController
 
   def create
   	@survey = current_user.surveys.build(survey_params)
-
   	if @survey.save
   	  flash[:success] = "Survey created successfully, you can now add your questions"
   	  redirect_to add_question_path(@survey.id)
@@ -17,17 +16,15 @@ class SurveysController < ApplicationController
   end
 
   def show
+  	@survey = Survey.find(params[:id])
   end
 
   def update
-  end
-
-  def add_question
-  	print "survey_id " + params[:survey_id]
   end
 
   private
   def survey_params
   	params.require(:survey).permit(:title)
   end
+
 end

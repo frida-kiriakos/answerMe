@@ -25,18 +25,27 @@ class QuestionsController < ApplicationController
 
   def new_answers
   	@question = Question.find(params[:question_id])
-  	@question.answers_number.times {@question.answers.build()}
+  	@question.answers_number.times do
+      a = @question.answers.build()
+      a.save
+    end
+
   end
 
   def add_answers
   	@question = Question.find(params[:question_id])
-  	@question.answers_number.times {@question.answers.build()}
+  	# @question.answers_number.times {@question.answers.build()}
   	
   	begin
-  	  @question.answers.each.with_index do |answer, i|
-        answer.content = params["answers"]["content"][i]
+  	  # @question.answers.each.with_index do |answer, i|
+     #    answer.content = params["answers"]["content"][i]
+     #    answer.save
+  	  # end
+
+      @question.answers.each do |answer|
+        answer.content = params['question']['answers']["#{answer.id}"]
         answer.save
-  	  end
+      end
   	rescue
   	  flash[:error] = "Error adding answers"
   	  render 'new_answers'

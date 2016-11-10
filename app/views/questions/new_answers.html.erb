@@ -4,10 +4,10 @@
   <%= form_tag("/questions/#{@question.id}/add_answers", method: "post") do %>
     
       <% @question.answers.each do |answer|%>
-        <%= fields_for "answers[]", answer do |f|%>
-          <%= f.text_field :content, multiple: true, autofocus: true, class: 'form-control'%> <br/>
-        <%end%>
-      <%end%>
+        <div class="form-group ">
+          <input type="text" name="question[answers][<%=answer.id%>]" value="" class= 'form-control'>
+        </div>
+      <%end%> 
     
     <div class="form-group center">
       <%= submit_tag "Add Answers", class: 'btn btn-primary' %>

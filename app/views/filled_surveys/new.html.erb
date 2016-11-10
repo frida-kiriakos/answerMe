@@ -3,39 +3,46 @@
 <%= form_for(@filled_survey) do |f| %>
   <%= f.hidden_field :survey_id, value: @survey.id %>
   <%= f.fields_for :survey_answers do |builder| %>
+	<ul>
+	  <% @survey.questions.each do |question| %>
+	    <li>
 
-
-  <ul>
-      <% @survey.questions.each do |question| %>
-        <li>
-          <p><%= question.content %></p>
-          <%= builder.hidden_field :question_id, multiple:true, value: question.id %>
-          <% case question.answer_type%>
-            <%when "text"%>
-              <%= builder.text_field :content, multiple: true%>
-            
-            
-            <%when "radio"%>
-              <% question.answers.each do |answer| %>
-                <%= builder.radio_button :content, answer.content, {multiple: true}  %>
-                <%= answer.content %> <br/ >
-              <%end%>
+	      
+	      <h4><%= question.content %></h4>
+	      
+	      <%= builder.hidden_field :question_id, multiple:true, value: question.id %>
+	      <% case question.answer_type%>
+	        <%when "text"%>
+	          <div class="form-group">
+	            <%= builder.text_field :content, multiple: true, class: 'form-control'%>
+	          </div>
+	        
+	        
+	        <%when "radio"%>
+	          <% question.answers.each do |answer| %>
+	            <div class="form-check">
+	              <label class="form-check-label"><%= builder.radio_button :content, answer.content, {multiple: true, class: 'form-check-input'}  %><%= answer.content %></label>
+	            </div>
+	          <%end%>
 	        <%when "dropdown"%>
-	          <select name="filled_survey[survey_answers][content][]">
-	            <%question.answers.each do |answer|%>
-				  <option value="<%=answer.content%>"><%=answer.content%></option>
-				<%end%>
-			  </select>
+	          <div class="form-group">
+	            <select class='form-control' name="filled_survey[survey_answers][content][]">
+	              <%question.answers.each do |answer|%>
+				    <option  value="<%=answer.content%>"><%=answer.content%></option>
+				  <%end%>
+			    </select>
+			  </div>
 	          
 	        <%when "checkbox"%>
-              <% question.answers.each do |answer| %>
-                <%= builder.check_box :content, {multiple: true}, answer.content, nil %>
-                <%= answer.content %> <br/ >
-              <%end%>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+	          <% question.answers.each do |answer| %>
+	            <div class="form-check">
+	              <label class="form-check-label"><%= builder.check_box :content, {multiple: true, class: 'form-check-input'}, answer.content, nil %><%= answer.content %> </label>
+	            </div>
+	          <%end%>
+	      <% end %>
+	    </li>
+	  <% end %>
+	</ul>
   <%end%>
   <div class="form-group center">
     <%= f.submit "Submit Answers", class: 'btn btn-primary' %>

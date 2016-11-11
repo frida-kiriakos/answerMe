@@ -94,3 +94,7 @@ p {
     border-color: #d6e9c6;
     color: #468847;
     text-align: center; }
+
+.row-grid + .row-grid {
+    margin-top: 15px;
+}

@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   	  	  redirect_to add_question_path(@question.survey_id)
   	  	else
   	  	  flash[:success] = "question is added, please enter possible answers"
-  	  	  redirect_to new_answers_path(@question)
+  	  	  redirect_to new_answer_path(question_id: @question.id)
   	  	end
   	  else
   	  	flash[:error] = "error saving question"
@@ -23,36 +23,19 @@ class QuestionsController < ApplicationController
   	end
   end
 
-  def new_answers
-  	@question = Question.find(params[:question_id])
-  	@question.answers_number.times do
-      a = @question.answers.build()
-      a.save
-    end
-
+  def edit
+    @question = Question.find(params[:id])
   end
 
-  def add_answers
-  	@question = Question.find(params[:question_id])
-  	# @question.answers_number.times {@question.answers.build()}
-  	
-  	begin
-  	  # @question.answers.each.with_index do |answer, i|
-     #    answer.content = params["answers"]["content"][i]
-     #    answer.save
-  	  # end
-
-      @question.answers.each do |answer|
-        answer.content = params['question']['answers']["#{answer.id}"]
-        answer.save
-      end
-  	rescue
-  	  flash[:error] = "Error adding answers"
-  	  render 'new_answers'
-  	else
-  	  flash[:success] = "Answers added successfully"
-  	  redirect_to add_question_path(@question.survey_id)
-  	end
+  def update
+    @question = Question.find(params[:id])
+    if @question.update(question_params)
+      flash[:success] = "Question updated successfully"
+      redirect_to survey_path(@question.survey_id)
+    else
+      flash[:error] = "Error updating question"
+      render 'edit'
+    end
   end
 
   def destroy
@@ -61,9 +44,5 @@ class QuestionsController < ApplicationController
   private
   def question_params
   	params.require(:question).permit(:content, :answer_type, :answers_number)
-  end
-
-  def answer_params
-  	params.require(:answer).permit(:content)
   end
 end

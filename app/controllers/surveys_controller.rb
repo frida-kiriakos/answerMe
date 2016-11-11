@@ -1,5 +1,5 @@
 class SurveysController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!
   
   def new
   	@survey = current_user.surveys.build()
@@ -19,7 +19,15 @@ class SurveysController < ApplicationController
   	@survey = Survey.find(params[:id])
   end
 
+  def edit
+  	@survey = Survey.find(params[:id])
+  end
+
   def update
+  	@survey = Survey.find(params[:id])
+  	@survey.update_attribute(:title, params[:survey][:title])
+  	flash[:success] = "title updated successfully"
+  	redirect_to survey_path(@survey)
   end
 
   private

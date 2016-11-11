@@ -1,0 +1,28 @@
+<h3 class="center"> Edit Question </h3>
+<div class=" col-md-4 col-md-offset-4 col-xs-3">
+  <%= form_for(@question) do |f| %>
+    <div class="form-group">
+      <%= f.label :question %><br />
+      <%= f.text_field :content, autofocus: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.hidden_field :survey_id, value: @question.survey_id%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :answer_type %><br />
+      <%= f.select(:answer_type, ['text', 'radio', 'dropdown', 'checkbox'], class: 'form-control') %>
+    </div>
+   
+
+    <div class="form-group">
+      <%= f.label :number_of_answers %><br />
+      <%= f.text_field :answers_number, autofocus: true, class: 'form-control' %>
+    </div>
+    
+    <div class="actions form-group center">
+      <%= f.submit "Update", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

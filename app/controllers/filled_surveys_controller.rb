@@ -10,12 +10,15 @@ class FilledSurveysController < ApplicationController
   	@filled_survey = @survey.filled_surveys.new()
     @filled_survey.save
   	begin
-  	  params[:filled_survey][:survey_answers]['question_id'].each.with_index do |a, i|
-  	    survey_answer = @filled_survey.survey_answers.new
-  	    survey_answer.question_id = params[:filled_survey][:survey_answers]['question_id'][i]
-  	    survey_answer.content = params[:filled_survey][:survey_answers]['content'][i]
-  	    survey_answer.save
-  	  end
+      questions = params[:filled_survey][:survey_answers]['question_id']
+      answers = Hash[questions.zip(params[:filled_survey][:survey_answers]['content'])]
+      
+      questions.each do |id|
+        survey_answer = @filled_survey.survey_answers.new
+        survey_answer.question_id = id
+        survey_answer.content = answers[id]
+        survey_answer.save
+      end
 
   	rescue
   	  flash[:error] = "Error saving survey"

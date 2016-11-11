@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
     end
     @question.answers_number.times do
       a = @question.answers.build()
-      a.save
+      a.save(validate: false)
     end
   end
 
@@ -28,6 +28,8 @@ class AnswersController < ApplicationController
   end
 
   def edit
+    @question = Question.find(params[:question_id])
+    @answers = @question.answers
   end
 
   def update

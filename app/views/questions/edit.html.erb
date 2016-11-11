@@ -20,8 +20,9 @@
       <%= f.label :number_of_answers %><br />
       <%= f.text_field :answers_number, autofocus: true, class: 'form-control' %>
     </div>
-    
+
     <div class="actions form-group center">
+      <%= link_to "Edit answers", edit_answer_path(question_id: @question.id), class: 'btn btn-info' %>
       <%= f.submit "Update", class: 'btn btn-primary' %>
     </div>
   <% end %>

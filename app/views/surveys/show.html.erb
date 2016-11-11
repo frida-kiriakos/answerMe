@@ -1,26 +1,55 @@
 <%if user_signed_in? and current_user.id == @survey.user_id%>
-  <h3 class="center"> <%=@survey.title%> <%=link_to "Edit title", edit_survey_path(@survey), class: "btn btn-sm btn-default"%></h3> 
-
-  <% @survey.questions.each do |question|%>
-  <div class=" col-md-4 col-md-offset-4 col-xs-3">
-    <p><%= question.content%> <%=link_to "Edit", edit_question_path(question), class: "btn btn-sm btn-default"%></p>
-    <% if question.answer_type != "text"%>
-      <ul>
-        <% question.answers.each do |answer|%>
-          <li>
-      	  <%= answer.content%>
-          </li>
-        <%end%>
-      </ul>
-      <p class="row row-grid ">
-        <%=link_to "Edit answers", edit_answer_path(question), class: "btn btn-sm btn-default"%>
-      </p>
-    <%end%>
+  <div class="container">
+    <h3 class="center"> <%=@survey.title%> <%=link_to "Edit title", edit_survey_path(@survey), class: "btn btn-sm btn-default"%></h3>
   </div>
-  <%end%>
-  
-  <div class="row row-grid col-md-4 col-md-offset-4">
-	  <h4>Need to add more questions? <br/><br/><%= link_to "Add more questions", add_question_path(@survey), class: "btn btn-default" %></h4>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Number of options</th>
+          <th>Type</th>
+          <th>Options</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <% @survey.questions.each do |question|%>
+          <tr>
+            <td class="col-md-4"><%= question.content%></td>
+            <td class="col-md-2"><%= question.answers_number%></td>
+            <td class="col-md-1"><%= question.answer_type%></td>
+            <td class="col-md-4">
+              <% if question.answer_type != "text"%>
+                <ul>
+                  <% question.answers.each do |answer|%>
+                    <li>
+                    <%= answer.content%>
+                    </li>
+                  <%end%>
+                </ul>
+              <%end%>
+            </td>
+            <td class="col-md-1"><%=link_to "Edit", edit_question_path(question), class: "btn btn-sm btn-default"%></td>
+            <td class="col-md-2"><%= link_to "Edit Options", edit_answer_path(question_id: question.id), class: "btn btn-sm btn-success"%></td>
+            <td class="col-md-1"><%= button_to "Delete", question_path(question), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-sm btn-danger"%></td>
+          </tr>
+        <%end%>
+        
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
+    <div class="row row-grid ">
+  	  <h4>Need to add more questions? <br/><br/><%= link_to "Add more questions", add_question_path(@survey), class: "btn btn-default" %></h4>
+    </div>
+    <div class="row row-grid ">
+      <h4>Do you need to delete the survey?</h4>
+      <%= button_to "Delete Survey", survey_path(@survey), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger"%>
+    </div>
   </div>
 <%else%>
   <h3 class="center"> <%=@survey.title%></h3> 
@@ -42,7 +71,7 @@
 
 <%end%>
 
-<div class=" row row-grid col-md-4 col-md-offset-4 col-xs-3">
-<h4>Share the following link with your audience to fill the survey</h4>
-<%= link_to "Fill survey", fill_survey_path(@survey), target: "_blank", class: "btn btn-info"%>
+<div class=" container row row-grid">
+  <h4>Share the following link with your audience to fill the survey</h4>
+  <%= link_to "Fill survey", fill_survey_path(@survey), target: "_blank", class: "btn btn-info"%>
 </div>

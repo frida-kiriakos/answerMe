@@ -29,7 +29,31 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
-    if @question.update(question_params)
+    @question.assign_attributes(question_params)
+    if @question.answers_number_changed?
+      old_n, new_n = @question.answers_number_change
+      if !old_n.nil? and !new_n.nil? and old_n - new_n != 0
+        if new_n >= old_n
+          a_number = new_n - old_n
+          a_number.times do
+            a = @question.answers.build()
+            a.save(validate: false)
+          end
+        else
+          a_number = old_n - new_n
+          a_number.times do
+            @question.answers.last.destroy
+          end
+        end
+      elsif new_n == 0
+        old_n.times do
+          @question.answers.last.destroy
+        end
+      end
+
+    end
+
+    if @question.save
       flash[:success] = "Question updated successfully"
       redirect_to survey_path(@question.survey_id)
     else
@@ -39,6 +63,10 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @question = Question.find(params[:id])
+    @question.destroy
+    flash[:success] = "Question deleted successfully"
+    redirect_to survey_path(@question.survey_id)
   end
   
   private

@@ -30,6 +30,13 @@ class SurveysController < ApplicationController
   	redirect_to survey_path(@survey)
   end
 
+  def destroy
+  	@survey = Survey.find(params[:id])
+  	@survey.destroy
+  	flash[:success] = "Survey deleted successfully"
+  	redirect_to root_url
+  end
+
   private
   def survey_params
   	params.require(:survey).permit(:title)

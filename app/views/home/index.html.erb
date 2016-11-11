@@ -1,11 +1,26 @@
 <div class="center hero-unit">
   <h1>Welcome to AnswerMe</h1>
   <br/>
-  <h4 class="center"> Create your survey here. <br/><br/> Ask and there will be answers :) </h4>
+</div>
 
   <% if user_signed_in? %>
-    <%= link_to "Create Survey", new_survey_path, class: "btn btn-large btn-primary" %>
+    <% if @surveys %>
+      <ul>
+      <% @surveys.each do |survey|%>
+        <li><%= link_to survey.title, survey_path(survey)%></li>
+      <%end%>
+      </ul>
+    <%end%>
+    <div class="center hero-unit">
+      <h4 class="center"> Create a survey here. <br/> </h4>
+      <%= link_to "Create Survey", new_survey_path, class: "btn btn-large btn-primary" %>
+    </div>
   <% else %>
-    <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
+    <div class="center hero-unit">
+      <h4 class="center"> Sign in to start creating surveys <br/></h4>
+      <%= link_to "Sign in", new_user_session_path, class: "btn btn-large btn-success" %>
+      <h4 class="center"> Don't have an account? <br/></h4>
+      <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
+    </div>
   <% end %>
-</div>
+

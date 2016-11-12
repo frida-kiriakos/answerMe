@@ -22,8 +22,9 @@
     </div>
 
     <div class="actions form-group center">
-      <%= link_to "Edit answers", edit_answer_path(question_id: @question.id), class: 'btn btn-info' %>
+      <%= link_to "Edit options", edit_answer_path(question_id: @question.id), class: 'btn btn-info' %>
       <%= f.submit "Update", class: 'btn btn-primary' %>
+      <%= link_to "Cancel", survey_path(@question.survey_id), class: "btn btn-danger" %>
       <%= link_to "Back", :back, class: "btn btn-default" %>
     </div>
   <% end %>

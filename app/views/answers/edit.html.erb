@@ -1,17 +1,22 @@
 <h3 class="center"> Edit Answers </h3>
 <h2 class="center"> <%= @question.content%> </h2>
 <div class=" col-md-4 col-md-offset-4 col-xs-3">
-  <%= form_for(@question.answers.first) do |f| %>
+  <%= form_for(@question.answers.first, method: :put) do |f| %>
+    <div class="form-group">
       <%= f.hidden_field :question_id, value: @question.id%>
+    </div>
       <% @question.answers.each do |answer|%>
-        <div class="form-group input-group ">
+      <div class="form-group">
+        <div class="input-group ">
           <input type="text" name="question[answers][<%=answer.id%>]" value="<%=answer.content%>" class= 'form-control'>
-          <span class="input-group-btn"><%= button_to "Delete", answer_path(answer), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-sm btn-danger form-control"%></span>
+          <span class="input-group-btn"><%= link_to "Delete", answer_path(answer), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-sm btn-danger form-control"%></span>
         </div>
+      </div>
       <%end%> 
     
     <div class="form-group center">
       <%= f.submit "Update Answers", class: 'btn btn-primary' %>
+      <%= link_to "Cancel", survey_path(@question.survey_id), class: "btn btn-danger" %>
       <%= link_to "Back", :back, class: "btn btn-default" %>
     </div>
   <%end%>

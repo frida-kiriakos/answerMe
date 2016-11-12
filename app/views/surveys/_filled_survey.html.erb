@@ -1,0 +1,14 @@
+<tr>
+  <td class="col-md-1"><%=filled_survey.id%></td>
+  <td class="col-md-6"><ul>
+    <% filled_survey.survey_answers.each do |answer|%>
+      <li><%=answer.question.content%></li>
+    <%end%>
+  </ul></td>
+
+  <td class="col-md-6"><ul>
+    <% filled_survey.survey_answers.each do |answer|%>
+      <li><%=answer.content%></li>
+    <%end%>
+  </ul></td>
+</tr>

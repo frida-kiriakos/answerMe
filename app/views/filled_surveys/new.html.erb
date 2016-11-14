@@ -21,14 +21,14 @@
 	        <%when "radio"%>
 	          <% question.answers.each do |answer| %>
 	            <div class="form-check">
-	              <label class="form-check-label"><%= builder.radio_button :content, answer.content, {multiple: true, class: 'form-check-input'}  %><%= answer.content %></label>
+	              <label class="form-check-label"><%= builder.radio_button :content, answer.id, {multiple: true, class: 'form-check-input'}  %><%= answer.content %></label>
 	            </div>
 	          <%end%>
 	        <%when "dropdown"%>
 	          <div class="form-group">
 	            <select class='form-control' name="filled_survey[survey_answers][content][]">
 	              <%question.answers.each do |answer|%>
-				    <option  value="<%=answer.content%>"><%=answer.content%></option>
+				    <option  value="<%=answer.id%>"><%=answer.content%></option>
 				  <%end%>
 			    </select>
 			  </div>
@@ -36,7 +36,7 @@
 	        <%when "checkbox"%>
 	          <% question.answers.each do |answer| %>
 	            <div class="form-check">
-	              <label class="form-check-label"><%= builder.check_box :content, {multiple: true, class: 'form-check-input'}, answer.content, nil %><%= answer.content %> </label>
+	              <label class="form-check-label"><%= builder.check_box :content, {multiple: true, class: 'form-check-input'}, answer.id, nil %><%= answer.content %> </label>
 	            </div>
 	          <%end%>
 	      <% end %>

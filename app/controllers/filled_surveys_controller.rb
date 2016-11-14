@@ -16,12 +16,23 @@ class FilledSurveysController < ApplicationController
       questions.each do |id|
         survey_answer = @filled_survey.survey_answers.new
         survey_answer.question_id = id
-        survey_answer.content = answers[id]
+        
+        question = Question.find(id)
+        
+        if question.answer_type == "text"
+          survey_answer.answer_id = 1  # is of dummy answer needed for validation purposes
+          survey_answer.content = answers[id]
+        else
+          option = Answer.find(answers[id])
+          survey_answer.answer_id = option.id
+          survey_answer.content = option.content
+        end
+        
         survey_answer.save
       end
 
   	rescue
-  	  flash[:error] = "Error saving survey"
+  	  flash['error'] = "Error saving survey"
   	  render 'new'
   	else
   	  flash['success'] = "Survey submitted successfully"

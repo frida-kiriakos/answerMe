@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     
   get '/surveys/:survey_id/fill', to: 'filled_surveys#new', as: 'fill_survey'
   
-  resources :filled_surveys , only: [:new, :create]
+  resources :filled_surveys
   
   resources :answers
   

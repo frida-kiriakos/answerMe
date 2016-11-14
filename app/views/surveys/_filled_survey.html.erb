@@ -7,8 +7,12 @@
   </ul></td>
 
   <td class="col-md-6"><ul>
-    <% filled_survey.survey_answers.each do |answer|%>
-      <li><%=answer.content%></li>
+    <% filled_survey.survey_answers.each do |sa|%>
+      <% if sa.question.answer_type == 'text' or sa.answer.nil? %>
+        <li><%=sa.content%></li>
+      <%else%>
+        <li><%=sa.answer.content%></li>
+      <%end%>
     <%end%>
   </ul></td>
 </tr>
